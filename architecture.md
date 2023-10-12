@@ -18,17 +18,17 @@ Depending on your workload type and your hardware you can expect the following l
 
 ### Runtime
 #### Small
-* 25 concurrent users working on Human Centric Processes and Cases and ~25K Human Centric Processes processes per 8-hour day, or
+* 25 concurrent users working on Human Centric Processes and Cases and ~5K Human Centric Processes processes per 8-hour day, or
 * 500K Straight Thru Processes processes per 8-hour day without human interaction, or
 * 1.25 million Straight Thru Service Flows per 8-hour day without human interaction
 
 #### Medium
-* 125 concurrent users working on Human Centric Processes and Cases and ~5K Human Centric Processes processes per 8-hour day, or
+* 125 concurrent users working on Human Centric Processes and Cases and ~25K Human Centric Processes processes per 8-hour day, or
 * 1 million Straight Thru Processes processes per 8-hour day without human interaction, or
 * 3.5 million Straight Thru Service Flows per 8-hour day without human interaction
 
 #### Large
-* 625 concurrent users working on Human Centric Processes and Cases and ~5K Human Centric Processes processes per 8-hour day, or
+* 625 concurrent users working on Human Centric Processes and Cases and ~125K Human Centric Processes processes per 8-hour day, or
 * 2 million Straight Thru Processes processes per 8-hour day without human interaction, or
 * 7 million Straight Thru Service Flows per 8-hour day without human interaction
 
