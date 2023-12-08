@@ -11,7 +11,7 @@ This current chapter presents the scope of the content of this page:
 This chapter provides guidance for architecture, topology and design decisions that produce well-performing and scalable Workflow solutions.
 ## [Workflow container tuning and configuration](container.md)
 This chapter explains how to vertically and horizontally scale workflow containers and how to modify the configuration of a workflow container.
-## [Workflow container tuning for very large workloads](https://github.ibm.com/dba/workflow-performance-documentation/blob/main/container.md#tune-for-high-workloads-above-large-pattern-size)
+## [Workflow container tuning for very large workloads](https://github.com/icp4a/workflow-performance/blob/23.0.1/container.md#tune-for-high-workloads-above-large-pattern-size)
 This chapter explains how to scale and tune for workloads larger than "Large"
 ## [Zen and Common Services tuning and configuration](zen-cs.md)
 This chapter discusses scaling and tuning options of Zen and Common Services components used with Workflow.
