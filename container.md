@@ -74,7 +74,7 @@ Most of the caches can be modified by editing the custom_xml file:
 https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/23.0.1?topic=customizing-business-automation-workflow-properties
 
 
-### Tune for High Workloads above Large pattern size
+### Tune for High Workloads above Large pattern size - **draft**
 
 For very large workloads exceeding "Large" tuning might be required. This tuning depends on indiviual workloads. For thousands of concurrent users we applied the following tuning steps for Workflow Process Service. This is a sample:
 
