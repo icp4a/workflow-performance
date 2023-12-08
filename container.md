@@ -74,3 +74,116 @@ Most of the caches can be modified by editing the custom_xml file:
 https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/23.0.1?topic=customizing-business-automation-workflow-properties
 
 
+### Tune for High Workloads above Large pattern size
+
+For very large workloads exceeding "Large" tuning might be required. This tuning depends on indiviual workloads. For thousands of concurrent users we applied the following tuning steps for Workflow Process Service. This is a sample:
+
+#### WFPS resource
+
+Increase WFPS resources
+
+ * spec.database.managed.managementState=Unmanaged (this allows to modify the Postgres cluster resources)
+ * spec.node.replicas=8
+ * spec.node.resources.limits.cpu=6
+ * spec.node.resources.limits.memory=4Gi
+ * database.client.maxConnectionPoolSize=400
+ 
+#### Cluster resource (Postgres DB)
+
+Increase database ressources
+
+ * spec.postgresql.parameters.max_connections=1000
+ * spec.postgresql.parameters.max_prepared_transactions=1000
+ * spec.resources.limits.cpu=32
+ * spec.resources.limits.memory=32Gi
+
+#### Postgres DB filesystem
+Make sure the postgres filesystem resides on fast disks.
+
+#### Zen usermanagement pods
+
+Increase Zen resources required for user session validation.
+```
+oc scale deployment usermgmt --replicas=12
+```
+
+#### Disabling Notifications (optional)
+
+Reduces JMS load and CPU usage on wfps-pod-0.
+
+Edit ConfigMap wfpsruntime-sample-liberty-dynamic-config:
+
+lombardi-empty.xml:
+```
+<properties>
+
+  <server merge="mergeChildren">
+
+     <web-messaging-push merge="replace" match="elementName" enabled="false">
+
+        <web-messaging type="NOTIFY_TASK_RESOURCE_ASSIGNED" enabled="false"/>
+
+        <web-messaging type="NOTIFY_TASK_COLLABORATION_INVITE" enabled="false"/>
+
+        <web-messaging type="NOTIFY_PROCESS_COMMENT_TAGGED" enabled="false"/>
+
+        <web-messaging type="TASKLIST_TASK_RESOURCE_ASSIGNED" enabled="false"/>
+
+        <web-messaging type="TASKLIST_TASK_FIELD_CHANGED" enabled="false"/>
+
+    </web-messaging-push>
+
+  </server>
+
+</properties>
+```
+
+#### Modifying GroupSync interval or diabling GroupSync
+
+Reduce number of SCIM calls that might respond slow under very high load and causing long end user response times.
+
+Edit ConfigMap wfpsruntime-sample-liberty-dynamic-config to disable GroupSync:
+
+lombardi-empty.xml:
+```
+<properties>
+
+        <common>
+
+            <security>
+
+               <user-group-membership-sync-cache-expiration merge="replace">-1</user-group-membership-sync-cache-expiration>
+
+            </security>
+
+        </common>
+
+</properties>
+```
+
+#### Tune IAM
+
+Eliminate SCIM response time peaks
+
+Increase all caches and TTLs by factor 10:
+
+Edit ConfigMap ibm-iam-bindinfo-platform-auth-idp
+Edit ConfigMap platform-auth-idp
+
+#### Tune Zen
+
+Reduce response time peaks:
+
+Scale Zen-audit to 8 replicas
+
+#### Increase coreThreads (depends on CP4BA version)
+
+Edit configmap wfpsruntime-sample-liberty-dynamic-config:
+```
+<server>
+
+<executor coreThreads="100" />
+
+</server>
+```
+
