@@ -19,6 +19,13 @@ Databases are designed for high availability, transactional processing, and reco
 As a result, database log files might be heavily used. More important, the log-writes hold commit operations pending, meaning that the application is synchronously waiting for the write to complete. Therefore, the performance of write access to the database log files is critical to overall system performance. For this reason, we suggest that database log files be placed on a fast disk subsystem with write-back cache.
 #### Place database log files on a separate device from the table space containers:
 A basic strategy for all database storage configurations is to place the database logs on dedicated physical disks, ideally on a dedicated disk adapter. This placement reduces disk access contention between I/O to the table space containers and I/O to the database logs and preserves the mostly sequential access pattern of the log stream. Such separation also improves recoverability when log archival is employed.
+#### Enlarge the transaction log
+Each database writes log files called "transaction log" to recored the changes on the database. These log files are used when the database needs to be recovered.
+Under high load, the transaction log might be too small.
+For DB2, increase the size of each log files (LOGFILSIZ) and the number of log files (LOGPRIMARY / LOGSECOND)
+* db2 update db cfg for [database] using LOGFILSIZ [new value]
+* db2 update db cfg for [database] using LOGPRIMARY [new value]
+* db2 update db cfg for [database] using LOGSECOND [new value] IMMEDIATE
 ### Tuning queries
 #### Monitor top SQL statements
 Use the database vendor’s tools to discover expensive SQL statements, for example the SYSIBMADMIN.TOP_DYN_SQL view of DB2, or the automated workload repository (AWR) report of an Oracle database. Even in a perfectly tuned database, you can find a most expensive SQL query, even if this query needs no tuning at all.
@@ -52,9 +59,17 @@ In non-federated Business Automation Workflow environments, you can optimize sav
 <https://community.ibm.com/community/user/automation/blogs/stephan-volz/2021/04/01/baw-postgresql-on-container>
 ## Tuning PostgreSQL in the context of WfPS
 ### Setting PostgreSQL database to unmanaged mode
-Before customizing the PostgreSQL configuration with parameters that are not exposed through the WfPS custom resource (WfPSRuntime), it is necessary to set the database to unmanaged. This can be done by changing the value of `spec.database.managed.managementState` to `Unmanaged`.
+Before customizing the PostgreSQL configuration with parameters that are not exposed through the WfPS custom resource (type: WfPSRuntime), it is necessary to set the database to unmanaged. This can be done by changing the value of `spec.database.managed.managementState` to `Unmanaged`.
 ### Setting the maximum allowed connections
 When encountering exception `FATAL: remaining connection slots are reserved for non-replication superuser connections` this may be an indicator that the server-side connections are depleted and the `max_connections` parameter (default typically 100) needs to be increased. For this, the PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre) needs to be modified after setting the database mode to unmanaged. Add or modify the paramater at location `items[*].spec.postgresql.parameters.max_connections` in the Cluster resource.
+### Adjusting CPU and memory resource settings
+You can adjust the resource settings for the PostgreSQL container(s) by modifying the following values in the unmanaged PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre).  
+`spec.resources.limits.cpu`  
+`spec.resources.limits.memory`  
+`spec.resources.requests.cpu`  
+`spec.resources.requests.memory`  
+### Adjusting max_prepared_transactions
+When encountering exceptions like `org.postgresql.xa.PGXAException: Error preparing transaction.` this may be an indicator that the maximum number of prepared transactions is reached. To increase the value, modify the PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre) and increase the value at location `items[*].spec.postgresql.parameters.max_prepared_transactions` (default: 100).
 
 # Oracle specific database tuning and troubleshooting
 ## Improve IBM BPM performance with an Oracle database

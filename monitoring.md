@@ -1,6 +1,6 @@
 For monitoring the performance of a containerized Workflow system there a several tools and approaches available. 
 Several sources of information are highly valuable, even necessary, when diagnosing and resolving performance problems. This information is often referred to as must-gather information. It includes the following items:
-* Hardware ressource utilization
+* Hardware resource utilization
    * Client (the users workstation) processor utilization and memory use
    * CP4BA container processor utilization, memory use and network utilization
    * Database server processor, disk subsystem, memory use and network utilization

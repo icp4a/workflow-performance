@@ -82,11 +82,11 @@ To improve overall system performance, it can be important to purge data from th
 
 ### Workflow authoring
 Workflow Authoring holds snapshots of Process Applications (PAs) and Toolkits as they are developed. In addition to every named snapshot you create, every time a save operation is done, an unnamed snapshot is created. As a result, a significant number of unnamed snapshots can accumulate over time, which can impact the performance of many operations. To remove named and unnamed snapshots from the system use the command: 
-<https://www.ibm.com/docs/en/baw/23.x?topic=data-deleting-snapshots>
+<https://www.ibm.com/docs/en/baw/24.x?topic=data-deleting-snapshots>
 
 ### Workflow runtime
-Workflow runtime holds named snapshots of process applications that have been deployed to it. To remove named snapshots from the Process Server use the command: <https://www.ibm.com/docs/en/baw/23.x?topic=data-deleting-snapshots>
-If completed process and task instances are not removed, they accumulate over time, which typically impact overall system performance, especially for task list queries like saved searches. To remove completed instances from use the command: <https://www.ibm.com/docs/en/baw/23.x?topic=data-deleting-process-instances>
+Workflow runtime holds named snapshots of process applications that have been deployed to it. To remove named snapshots from the Process Server use the command: <https://www.ibm.com/docs/en/baw/24.x?topic=data-deleting-snapshots>
+If completed process and task instances are not removed, they accumulate over time, which typically impact overall system performance, especially for task list queries like saved searches. To remove completed instances from use the command: <https://www.ibm.com/docs/en/baw/24.x?topic=data-deleting-process-instances>
 
 ## Set an appropriate Java heap size to deliver optimal throughput and response time. 
 Memory usage data that is obtained through the JVM’s verbose garbage collection option (verbosegc) helps determine the optimal settings. Further information is available at <https://community.ibm.com/community/user/automation/blogs/florian-leybold1/2020/12/17/spot-garbage-collection-overhead-in-baw-on-contain>
@@ -99,7 +99,7 @@ In non-federated Business Automation Workflow environments, you can optimize sav
 Correct tuning and deployment choices for databases can greatly increase overall system throughput. For more details, see [Database configuration, tuning, and best practices](database.md)
 
 ## Tune the bpd-queue-capacity and max-thread-pool-size parameters to achieve optimal throughput and scaling
-To optimize throughput and scaling, start with a bpd-queue-capacity of 10 per physical processor core (for example, 40 for a 4-processor core configuration), with a maximum value of 80: <https://www.ibm.com/docs/en/baw/19.x?topic=manager-event-configuration-settings>
+To optimize throughput and scaling, start with a bpd-queue-capacity of 10 per physical processor core (for example, 40 for a 4-processor core configuration), with a maximum value of 80: <https://www.ibm.com/docs/en/baw/24.x?topic=manager-event-configuration-settings>
 
 ## Disable tracing and logging
 Tracing and logging are important when debugging, but the resources to do so severely affects performance. 
