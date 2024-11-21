@@ -111,24 +111,26 @@ For very large workloads exceeding "Large" tuning is required. This tuning depen
 
 #### WFPS resource
 
- * spec.database.managed.managementState=Unmanaged
- * spec.node.replicas=8
- * spec.node.resources.limits.cpu=6
- * spec.node.resources.limits.memory=4Gi
- * database.client.maxConnectionPoolSize=400
+* spec.database.managed.managementState=Unmanaged
+* spec.node.replicas=8
+* spec.node.resources.limits.cpu=6
+* spec.node.resources.limits.memory=4Gi
+* database.client.maxConnectionPoolSize=400
  
 #### Cluster resource (Postgres DB)
 
- * spec.postgresql.parameters.max_connections=1000
- * spec.postgresql.parameters.max_prepared_transactions=1000
- * spec.resources.limits.cpu=32
- * spec.resources.limits.memory=32Gi
+* spec.postgresql.parameters.max_connections=1000
+* spec.postgresql.parameters.max_prepared_transactions=1000
+* spec.resources.limits.cpu=32
+* spec.resources.limits.memory=32Gi
 
 #### Postgres DB filesystem
-Make sure the postgres filesystem resides on fast disks
+Make sure the postgres filesystem resides on fast disks.
 
 #### Zen usermanagement pods
-oc scale deployment usermgmt --replicas=12
+Increate number of zen usermanagement pods.
+
+`oc scale deployment usermgmt --replicas=12`
 
 
 #### Disabling Notifications (optional)
@@ -205,12 +207,6 @@ Scale Zen-audit to 8 replicas
 Edit configmap wfpsruntime-sample-liberty-dynamic-config:
 ```
 <server>
-
-<executor coreThreads="100" />
-
+  <executor coreThreads="100" />
 </server>
 ```
-
-
-
-
