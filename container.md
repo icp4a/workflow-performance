@@ -193,7 +193,7 @@ Eliminate SCIM response time peaks
 
 Increase all caches and TTLs by factor 10:
 
-Edit ConfigMap ibm-iam-bindinfo-platform-auth-idp
+Edit ConfigMap ibm-iam-bindinfo-platform-auth-idp  
 Edit ConfigMap platform-auth-idp
 
 #### Tune Zen
