@@ -20,7 +20,7 @@ As a result, database log files might be heavily used. More important, the log-w
 #### Place database log files on a separate device from the table space containers:
 A basic strategy for all database storage configurations is to place the database logs on dedicated physical disks, ideally on a dedicated disk adapter. This placement reduces disk access contention between I/O to the table space containers and I/O to the database logs and preserves the mostly sequential access pattern of the log stream. Such separation also improves recoverability when log archival is employed.
 #### Enlarge the transaction log
-Each database writes log files called "transaction log" to recored the changes on the database. These log files are used when the database needs to be recovered.
+Each database writes log files called "transaction log" to record the changes on the database. These log files are used when the database needs to be recovered.
 Under high load, the transaction log might be too small.
 For DB2, increase the size of each log files (LOGFILSIZ) and the number of log files (LOGPRIMARY / LOGSECOND)
 * db2 update db cfg for [database] using LOGFILSIZ [new value]
@@ -61,7 +61,7 @@ In non-federated Business Automation Workflow environments, you can optimize sav
 ### Setting PostgreSQL database to unmanaged mode
 Before customizing the PostgreSQL configuration with parameters that are not exposed through the WfPS custom resource (type: WfPSRuntime), it is necessary to set the database to unmanaged. This can be done by changing the value of `spec.database.managed.managementState` to `Unmanaged`.
 ### Setting the maximum allowed connections
-When encountering exception `FATAL: remaining connection slots are reserved for non-replication superuser connections` this may be an indicator that the server-side connections are depleted and the `max_connections` parameter (default typically 100) needs to be increased. For this, the PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre) needs to be modified after setting the database mode to unmanaged. Add or modify the paramater at location `items[*].spec.postgresql.parameters.max_connections` in the Cluster resource.
+When encountering exception `FATAL: remaining connection slots are reserved for non-replication superuser connections` this may be an indicator that the server-side connections are depleted and the `max_connections` parameter (default typically 100) needs to be increased. For this, the PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre) needs to be modified after setting the database mode to unmanaged. Add or modify the parameter at location `items[*].spec.postgresql.parameters.max_connections` in the Cluster resource.
 ### Adjusting CPU and memory resource settings
 You can adjust the resource settings for the PostgreSQL container(s) by modifying the following values in the unmanaged PostgreSQL custom resource (type: Cluster, name: \<wfps-instance-name\>-postgre).  
 `spec.resources.limits.cpu`  

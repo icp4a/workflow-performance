@@ -56,6 +56,14 @@ Find the baw_configuration.jvm_customize_options section. If it doesn't exist, c
 
 Wait for the change to propagate to the config map
 
+### Inbound MQService tuning
+When a large rate of messages is expected to be consumed by an inbound MQ service, tuning might be advisable. By default, the consuming MDB inside BAW is able to process a maximum of 10 messages simultaneously. An MDB thread is freed and can retrieve the next message only once it hits the first transaction boundary of the work it triggers. E.g. if the inbound message triggers a process, depending on the design of that process and when the first transaction boundary is reached, all MDB threads might become busy, thus introducing a bottleneck. To avoid this, increase `maxConcurrency` in the corresponding inbound MQ service activation spec.
+
+```
+<jmsActivationSpec id="Teamworks/twcore-ejb/MQServiceConsumerMessageListener" authDataRef="MQServiceConsumerAuthAlias" autoStart="${mq_service_auto_start}">
+  <properties.wmqJms destinationRef="jndi/MDBQ" transportType="CLIENT" channel="${mq_service_channel}" queueManager="${mq_service_queue_manager}" hostName="${mq_service_host}" port="${mq_service_port}" maxConcurrency="100"/>
+</jmsActivationSpec>
+```
 
 ### Tune database connection pool
 
@@ -107,7 +115,7 @@ bastudio_configuration:
 
 ### Tune for High Workloads above Large pattern size
 
-For very large workloads exceeding "Large" tuning is required. This tuning depends on indiviual workloads. For 7000 concurrent users (20s thinktime) and a throughput of 30+ human processes per second / 120 human tasks per second we applied the following tuning steps for Workflow Process Service. This is a sample:
+For very large workloads exceeding "Large" tuning is required. This tuning depends on individual workloads. For 7000 concurrent users (20s thinktime) and a throughput of 30+ human processes per second / 120 human tasks per second we applied the following tuning steps for Workflow Process Service. This is a sample:
 
 #### WFPS resource
 
@@ -128,7 +136,7 @@ For very large workloads exceeding "Large" tuning is required. This tuning depen
 Make sure the postgres filesystem resides on fast disks.
 
 #### Zen usermanagement pods
-Increate number of zen usermanagement pods.
+Increase number of zen usermanagement pods.
 
 `oc scale deployment usermgmt --replicas=12`
 
@@ -210,3 +218,19 @@ Edit configmap wfpsruntime-sample-liberty-dynamic-config:
   <executor coreThreads="100" />
 </server>
 ```
+
+#### Increase Nginx maximum worker connections
+
+Issue:
+Nginx logs show the following alerts.
+```
+2023/04/21 14:59:36 [alert] 48#48: 1024 worker_connections are not enough
+2023/04/21 14:59:36 [alert] 48#48: *90460 1024 worker_connections are not enough while connecting to upstream, client: 10.128.4.1, server: localhost, request: "GET /auth/login/oidc/callback?code=ax6EXP2325OSRXmzKWCD9gzqDMsHKR HTTP/1.1", upstream: "https://172.30.121.86:3443/auth/login/oidc/callback?code=ax6EXP2325OSRXmzKWCD9gzqDMsHKR", host: "cpd-icp4badeploy.apps.ocp4-cl-i24.performance.de.ibm.com"
+````
+
+Solution:
+Edit configmap product-configmap, increase the number of worker_connections by setting variable GATEWAY_WORKER_CONNECTIONS, e.g.:
+```
+GATEWAY_WORKER_CONNECTIONS: "4096"
+``` 
+

@@ -5,7 +5,7 @@ This chapter provides guidance for how to design and deploy a high-performing an
 # Deployment and maintenance guidelines
 
 ## Use the right CP4BA deployment size
-When installing Workflow patterns within the Cloudpak for Business Automation you can choose between Small, Medium or Large deployment sizes for Workflow, Zen and Common Services. Generally it is recommended to use the same deployment sizes for CP4BA, Zen and Common Services.
+When installing Workflow patterns within the Cloud Pak for Business Automation you can choose between Small, Medium or Large deployment sizes for Workflow, Zen and Common Services. Generally it is recommended to use the same deployment sizes for CP4BA, Zen and Common Services.
 
 ❗IMPORTANT: These are **T-Shirt** sizings and should give you a starting point for your final sizing. 
 
@@ -118,7 +118,7 @@ The following principles generally apply for most customers:
 * Customers are concerned about the state of their business and their processes. Therefore, events that signify changes in state are important. For long-running and human activities, this change in state is fairly common. Use events to track when long-running activities complete, such as when tasks change state.
 * For short-running flows that complete within seconds, it is sufficient to know that a flow completes, perhaps with the associated data. Distinguishing events within a microflow like process or Service Flow that are only milliseconds or seconds apart usually does not make sense. Therefore, two events (start and end) are sufficient for a straight through process.
 
-## Manage variable usage and persitence of Execution Context
+## Manage variable usage and persistence of Execution Context
 Variables are persisted to the database when execution contexts are saved, which can happen fairly frequently by default. These persistence operations are expensive. Minimize the persistence cost in the following ways:
 * disable "Save Execution Context"
 * Minimize the number of variables used.

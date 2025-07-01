@@ -5,7 +5,7 @@
 <https://www.ibm.com/support/pages/client-side-human-service-performance-troubleshooting>
 
 
-#### Workflow Process Performance Testing Jmeter Testplan
+#### Workflow Process Performance Testing JMeter Testplan
 <https://community.ibm.com/community/user/automation/blogs/torsten-wilms1/2023/02/17/workflow-process-performance-testing-sample>
 
 #### Deliver Modern UI for IBM BPM with the Coach Framework and Other Approaches

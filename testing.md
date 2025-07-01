@@ -4,7 +4,7 @@ In this section, we discuss key elements of planning for, executing, and interpr
 * Plan the performance evaluation early in the development cycle
 * Ensure performance results are representative
 * Apply Performance tuning methodology
-* Sample: Jmeter based test using the HiringSample process application 
+* Sample: JMeter based test using the HiringSample process application 
 
 # Create a performance evaluation checklist
 Performance evaluations take many forms. The following is one common:
@@ -30,7 +30,7 @@ After the performance objectives are defined, a performance plan should be writt
 * Define a workload that properly models the business scenarios of interest.
 * Provision a topology that is as close to the production topology as possible.
 * Define a database population (for example, user and group membership, number of process instances and tasks, both active and complete) that represent the expected steady state of the production environment.
-* Choose a performance testing tool that can script the scenarios and apply the necessary load to mimic a production environment. Apache Jmeter is one example.
+* Choose a performance testing tool that can script the scenarios and apply the necessary load to mimic a production environment. Apache JMeter is one example.
 * Design workloads that are reliable, produce repeatable results, are easy to run, and will complete in a reasonable amount of time.
 
 # Ensure performance results are representative
@@ -46,6 +46,6 @@ When running the performance test, ensure that the results obtained are represen
     * Clean up at the end of the run, particularly queues and the databases. To ensure that repeatable results are obtained, each measurement run should start with the system in a state consistent with the start of the previous measurement run and matching the preload state defined in your performance plan.
 * Check for errors, exceptions, and time outs in logs and reports. These are typically indicative of functional problems or configuration issues, and can also skew performance results. Any sound performance measurement methodology insists upon fixing functional problems before evaluating performance metrics.
 
-# Sample: Jmeter based test using the HiringSample process application
+# Sample: JMeter based test using the HiringSample process application
 
 <https://community.ibm.com/community/user/automation/blogs/torsten-wilms1/2023/02/17/workflow-process-performance-testing-sample>

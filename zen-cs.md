@@ -16,9 +16,9 @@ Modify `spec.size` parameter to `small` or `medium` or `large`
 
 # Tuning the frontend layer
 
-### Scale ngnix horizontally
+### Scale nginx horizontally
 
-Ngnix `worker_connections` are limited to 1024. This can slow down response times or cause timeouts on client side.
-`worker_connections` cannot be modified, but ngnix can be scaled to increase the total number of worker_connections:
+nginx `worker_connections` are limited to 1024. This can slow down response times or cause timeouts on client side.
+`worker_connections` cannot be modified, but nginx can be scaled to increase the total number of worker_connections:
 
 `oc scale deployment ibm-nginx --replicas=[number of replicas]`

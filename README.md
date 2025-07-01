@@ -1,4 +1,4 @@
-**_Disclaimer: This publication reflects and summarizes best practises and performance tuning and monitoring methods and is not an official IBM documentation_**
+**_Disclaimer: This publication reflects and summarizes best practices and performance tuning and monitoring methods and is not an official IBM documentation_**
 
 This publication provides performance tuning tips and best practices for IBM CloudPak for Automation / Business Automation Workflow and Workflow Process Service. 
 These products are deployed on Kubernetes and OCP and are build on the core capabilities of IBM liberty, Java and database technologies. As a result, IBM Workflow solutions benefit from tuning, configuration, and best practices information for Kubernetes, OCP, Liberty and JVMs.
