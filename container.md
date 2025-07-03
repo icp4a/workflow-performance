@@ -233,4 +233,4 @@ Edit configmap product-configmap, increase the number of worker_connections by s
 ```
 GATEWAY_WORKER_CONNECTIONS: "4096"
 ``` 
-
+Restart nginx pods for this change to take effect.
