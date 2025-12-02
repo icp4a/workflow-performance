@@ -4,7 +4,7 @@ This chapter describes how the containers in the workflow namespaces can be conf
 ### Set the deployment profile size
 
 #### CP4BA pods
-You can select a deployment profile (sc_deployment_profile_size) and enable it during or after the installation. IBM Cloud Pak® for Business Automation provides small, medium, and large deployment profiles. For more information about deployment profiles refer to https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/24.0.1?topic=pcmppd-system-requirements. This affects the cpu, memory resources and/or the amount of replicas of Workflow pods:
+You can select a deployment profile (sc_deployment_profile_size) and enable it during or after the installation. IBM Cloud Pak® for Business Automation provides small, medium, and large deployment profiles. For more information about deployment profiles refer to https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/25.0.1?topic=pcmppd-system-requirements. This affects the cpu, memory resources and/or the amount of replicas of Workflow pods:
 
 Edit the ICP4ACluster object:
 `oc edit ICP4ACluster -o yaml`
@@ -79,10 +79,10 @@ For WfPS, edit the WfPSRuntime resource and add the connection pool size value h
 `spec.database.client.maxConnectionPoolSize`
 
 ### Modify Workflow Caches
-Several cache settings that might benefit from larger values. An overview about caches can be found at https://www.ibm.com/docs/en/baw/24.x?topic=data-cache-cache-related-settings. Refer also to the Cache monitoring section at https://www.ibm.com/docs/en/baw/24.x?topic=data-using-process-instrumentation-cache-tuning.
+Several cache settings that might benefit from larger values. An overview about caches can be found at https://www.ibm.com/docs/en/baw/25.x?topic=data-cache-cache-related-settings. Refer also to the Cache monitoring section at https://www.ibm.com/docs/en/baw/25.x?topic=data-using-process-instrumentation-cache-tuning.
 
 Most of the caches can be modified by editing the custom_xml file:
-https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/24.0.1?topic=customizing-business-automation-workflow-properties
+https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/25.0.1?topic=customizing-business-automation-workflow-properties
 
 ### Reduce or disable User-Group-Syncs
 
@@ -233,4 +233,17 @@ Edit configmap product-configmap, increase the number of worker_connections by s
 ```
 GATEWAY_WORKER_CONNECTIONS: "4096"
 ``` 
-Restart nginx pods for this change to take effect.
+Restart nginx pods for this change to take effect. 
+
+#### Externalize JMS
+
+Issue:
+In high load scenarios (especially when having enabled Kafka event emission), BAW pod 0 experiences much higher CPU usage than other BAW pods. Pod 0 might reach its CPU limit, causing its readiness probe to fail and itself to be marked as unready, which crashes the BAW statefulset due to missing messaging engine. The reason is that in default configuration, the JMS server resides in pod 0 only and therefore can not scale horizontally by adding more pod replicas. By default, pod 0 additionally functions as the messaging engine server and needs to handle additional messaging workload.
+
+Solution:
+When using workflow in high load scenarios, JMS should be externalized into a separate deployment, relieving BAW pod 0. This can be achieved with setting:
+```
+baw_configuration[x].jms.is_embedded: false
+```
+The new JMS deployment can be configured separately, e.g. in terms of vertical scaling, node affinity, storage. Further reading:
+https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/25.0.1?topic=customizing-independent-jms-server-business-automation-workflow
