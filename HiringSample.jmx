@@ -6,8 +6,116 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Benutzer definierte Variablen">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User defined variables &lt;-- EDIT THIS ONLY">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="userPasswordCSVFile" elementType="Argument">
+            <stringProp name="Argument.name">userPasswordCSVFile</stringProp>
+            <stringProp name="Argument.value">C:\hiring_jmeter\csv\UserPassword.csv</stringProp>
+            <stringProp name="Argument.desc">Full path to CSV file that contains a list of comma separated user,password combinations</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="outputDir" elementType="Argument">
+            <stringProp name="Argument.name">outputDir</stringProp>
+            <stringProp name="Argument.value">C:\hiring_jmeter\output</stringProp>
+            <stringProp name="Argument.desc">Directory to store logs and results</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="targetServer" elementType="Argument">
+            <stringProp name="Argument.name">targetServer</stringProp>
+            <stringProp name="Argument.value">cpd-icp4badeploy.apps.ocp4-cl-i37.performance.de.ibm.com</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">CPD route URL</stringProp>
+          </elementProp>
+          <elementProp name="targetPort" elementType="Argument">
+            <stringProp name="Argument.name">targetPort</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
+            <stringProp name="Argument.desc">CPD route port</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="targetProtocol" elementType="Argument">
+            <stringProp name="Argument.name">targetProtocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.desc">CPD route protocol</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="bawInstance" elementType="Argument">
+            <stringProp name="Argument.name">bawInstance</stringProp>
+            <stringProp name="Argument.value">baw-instance1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">BAW instance name</stringProp>
+          </elementProp>
+          <elementProp name="paAcronym" elementType="Argument">
+            <stringProp name="Argument.name">paAcronym</stringProp>
+            <stringProp name="Argument.value">HSS</stringProp>
+            <stringProp name="Argument.desc">Acronym of the process application that contains the benchmark process</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="processName" elementType="Argument">
+            <stringProp name="Argument.name">processName</stringProp>
+            <stringProp name="Argument.value">Standard HR Open New Position</stringProp>
+            <stringProp name="Argument.desc">Name of the benchmark process model</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="rounds" elementType="Argument">
+            <stringProp name="Argument.name">rounds</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Number of test iterations (new Logon per iteration)</stringProp>
+          </elementProp>
+          <elementProp name="numThreads" elementType="Argument">
+            <stringProp name="Argument.name">numThreads</stringProp>
+            <stringProp name="Argument.value">100</stringProp>
+            <stringProp name="Argument.desc">Number of parallel threads</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="scenarioLoopCount" elementType="Argument">
+            <stringProp name="Argument.name">scenarioLoopCount</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
+            <stringProp name="Argument.desc">Number of times a thread executes the scenario per round</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="thinkTime" elementType="Argument">
+            <stringProp name="Argument.name">thinkTime</stringProp>
+            <stringProp name="Argument.value">5</stringProp>
+            <stringProp name="Argument.desc">Seconds to wait before each user interaction, e.g. ${__Random(500,2000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="rampUpMultiplier" elementType="Argument">
+            <stringProp name="Argument.name">rampUpMultiplier</stringProp>
+            <stringProp name="Argument.value">0.5</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Multiplied with numThreads gives us the ramp up period in seconds</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="Target Server">
+        <stringProp name="HTTPSampler.domain">${targetServer}</stringProp>
+        <stringProp name="HTTPSampler.port">${targetPort}</stringProp>
+        <stringProp name="HTTPSampler.protocol">${targetProtocol}</stringProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.implementation">Java</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="User / Password CSV data">
+        <stringProp name="TestPlan.comments">CSV File containing a list of username,password combinations</stringProp>
+        <stringProp name="delimiter">,</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="filename">${userPasswordCSVFile}</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="variableNames">targetUser,targetPassword</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+      </CSVDataSet>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread group">
         <stringProp name="ThreadGroup.num_threads">${numThreads}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__groovy(Integer.valueOf((Integer.valueOf(${numThreads}) * BigDecimal.valueOf(${rampUpMultiplier})).intValue()) ,)}</stringProp>
@@ -19,113 +127,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User defined variables &lt;-- EDIT THIS ONLY">
-          <collectionProp name="Arguments.arguments">
-            <elementProp name="userPasswordCSVFile" elementType="Argument">
-              <stringProp name="Argument.name">userPasswordCSVFile</stringProp>
-              <stringProp name="Argument.value">C:\hiring_jmeter\csv\UserPassword.csv</stringProp>
-              <stringProp name="Argument.desc">Full path to CSV file that contains a list of comma separated user,password combinations</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="outputDir" elementType="Argument">
-              <stringProp name="Argument.name">outputDir</stringProp>
-              <stringProp name="Argument.value">C:\hiring_jmeter\output</stringProp>
-              <stringProp name="Argument.desc">Directory to store logs and results</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="targetServer" elementType="Argument">
-              <stringProp name="Argument.name">targetServer</stringProp>
-              <stringProp name="Argument.value">cpd-icp4badeploy.apps.ocp4-cl-i36.performance.de.ibm.com</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <stringProp name="Argument.desc">CPD route URL</stringProp>
-            </elementProp>
-            <elementProp name="targetPort" elementType="Argument">
-              <stringProp name="Argument.name">targetPort</stringProp>
-              <stringProp name="Argument.value">443</stringProp>
-              <stringProp name="Argument.desc">CPD route port</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="targetProtocol" elementType="Argument">
-              <stringProp name="Argument.name">targetProtocol</stringProp>
-              <stringProp name="Argument.value">https</stringProp>
-              <stringProp name="Argument.desc">CPD route protocol</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="bawInstance" elementType="Argument">
-              <stringProp name="Argument.name">bawInstance</stringProp>
-              <stringProp name="Argument.value">baw-instance1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <stringProp name="Argument.desc">BAW instance name</stringProp>
-            </elementProp>
-            <elementProp name="paAcronym" elementType="Argument">
-              <stringProp name="Argument.name">paAcronym</stringProp>
-              <stringProp name="Argument.value">HSS</stringProp>
-              <stringProp name="Argument.desc">Acronym of the process application that contains the benchmark process</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="processName" elementType="Argument">
-              <stringProp name="Argument.name">processName</stringProp>
-              <stringProp name="Argument.value">Standard HR Open New Position</stringProp>
-              <stringProp name="Argument.desc">Name of the benchmark process model</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="rounds" elementType="Argument">
-              <stringProp name="Argument.name">rounds</stringProp>
-              <stringProp name="Argument.value">1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <stringProp name="Argument.desc">Number of test iterations (new Logon per iteration)</stringProp>
-            </elementProp>
-            <elementProp name="numThreads" elementType="Argument">
-              <stringProp name="Argument.name">numThreads</stringProp>
-              <stringProp name="Argument.value">100</stringProp>
-              <stringProp name="Argument.desc">Number of parallel threads</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="scenarioLoopCount" elementType="Argument">
-              <stringProp name="Argument.name">scenarioLoopCount</stringProp>
-              <stringProp name="Argument.value">1000</stringProp>
-              <stringProp name="Argument.desc">Number of times a thread executes the scenario per round</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="thinkTime" elementType="Argument">
-              <stringProp name="Argument.name">thinkTime</stringProp>
-              <stringProp name="Argument.value">5</stringProp>
-              <stringProp name="Argument.desc">Seconds to wait before each user interaction, e.g. ${__Random(500,2000)}</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="rampUpMultiplier" elementType="Argument">
-              <stringProp name="Argument.name">rampUpMultiplier</stringProp>
-              <stringProp name="Argument.value">0.5</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <stringProp name="Argument.desc">Multiplied with numThreads gives us the ramp up period in seconds</stringProp>
-            </elementProp>
-          </collectionProp>
-        </Arguments>
-        <hashTree/>
-        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="Target Server">
-          <stringProp name="HTTPSampler.domain">${targetServer}</stringProp>
-          <stringProp name="HTTPSampler.port">${targetPort}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${targetProtocol}</stringProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.implementation">Java</stringProp>
-        </ConfigTestElement>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="User / Password CSV data">
-          <stringProp name="TestPlan.comments">CSV File containing a list of username,password combinations</stringProp>
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">${userPasswordCSVFile}</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">targetUser,targetPassword</stringProp>
-          <boolProp name="ignoreFirstLine">false</boolProp>
-        </CSVDataSet>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get IAM token">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get IAM token" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">/idprovider/v1/auth/identitytoken</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -164,7 +166,7 @@
           </RegexExtractor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Exchange the IAM token for a Platform UI token">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Exchange the IAM token for a Platform UI token" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">/v1/preauth/validateAuth</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -205,7 +207,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get BPM CSRF Token">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get BPM CSRF Token" enabled="true">
           <intProp name="HTTPSampler.concurrentPool">6</intProp>
           <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/system/login</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -249,12 +251,12 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Scenario loop (per thread)">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Scenario loop (per thread)" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">${scenarioLoopCount}</stringProp>
         </LoopController>
         <hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Prepare test data">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Prepare test data" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -324,7 +326,7 @@ def candidates = [
 vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="Think time">
+          <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="Think time" enabled="true">
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
@@ -337,7 +339,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223Timer>
           <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Basic headers">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Basic headers" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Authorization</stringProp>
@@ -377,7 +379,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="49587">201</stringProp>
               </collectionProp>
@@ -388,7 +390,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract process instance id">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract process instance id" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">processInstanceId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -396,7 +398,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get claimed Task &quot;Submit position request&quot;">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get claimed Task &quot;Submit position request&quot;" enabled="true">
             <stringProp name="TestPlan.comments">Gets the only claimed Task for this process instance</stringProp>
             <intProp name="HTTPSampler.concurrentPool">6</intProp>
             <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks</stringProp>
@@ -423,7 +425,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="49586">200</stringProp>
               </collectionProp>
@@ -434,7 +436,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of claimed Task">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of claimed Task" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">currentTaskId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.user_task_instances[0].id </stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
@@ -442,7 +444,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Submit position request&quot;">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Submit position request&quot;" enabled="true">
             <intProp name="HTTPSampler.concurrentPool">6</intProp>
             <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
             <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
@@ -502,7 +504,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">accept</stringProp>
@@ -515,7 +517,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="49586">200</stringProp>
               </collectionProp>
@@ -527,7 +529,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks" enabled="true">
             <stringProp name="TestPlan.comments">Gets all claimable Tasks of this process (should only be one)</stringProp>
             <intProp name="HTTPSampler.concurrentPool">6</intProp>
             <stringProp name="HTTPSampler.path">/${bawInstance}/rest/bpm/wle/v1/process/${processInstanceId}/taskSummary/active</stringProp>
@@ -539,7 +541,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="49586">200</stringProp>
               </collectionProp>
@@ -550,7 +552,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of ready Task">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of ready Task" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">currentTaskId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.tasks[0].tkiid</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
@@ -558,13 +560,13 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If new position">
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If new position" enabled="true">
             <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;positionType&quot;) == &quot;New&quot;)}</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
           </IfController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Review new position request&quot;">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Review new position request&quot;" enabled="true">
               <intProp name="HTTPSampler.concurrentPool">6</intProp>
               <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/claim</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -575,7 +577,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
                 </collectionProp>
@@ -587,7 +589,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </ResponseAssertion>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Review new position request&quot;">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Review new position request&quot;" enabled="true">
               <intProp name="HTTPSampler.concurrentPool">6</intProp>
               <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -623,7 +625,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">accept</stringProp>
@@ -636,7 +638,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
                 </collectionProp>
               </HeaderManager>
               <hashTree/>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
                 </collectionProp>
@@ -648,13 +650,13 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </ResponseAssertion>
               <hashTree/>
             </hashTree>
-            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved">
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved" enabled="true">
               <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;gmApproval&quot;) == &quot;true&quot;)}</stringProp>
               <boolProp name="IfController.evaluateAll">false</boolProp>
               <boolProp name="IfController.useExpression">true</boolProp>
             </IfController>
             <hashTree>
-              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks">
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks" enabled="true">
                 <stringProp name="TestPlan.comments">Gets all claimable Tasks of this process (should only be one)</stringProp>
                 <intProp name="HTTPSampler.concurrentPool">6</intProp>
                 <stringProp name="HTTPSampler.path">/${bawInstance}/rest/bpm/wle/v1/process/${processInstanceId}/taskSummary/active</stringProp>
@@ -666,7 +668,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
                 </elementProp>
               </HTTPSamplerProxy>
               <hashTree>
-                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
                   <collectionProp name="Asserion.test_strings">
                     <stringProp name="49586">200</stringProp>
                   </collectionProp>
@@ -687,13 +689,13 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </hashTree>
             </hashTree>
           </hashTree>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved or no approval needed">
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved or no approval needed" enabled="true">
             <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;gmApproval&quot;) == &quot;true&quot; || vars.get(&quot;positionType&quot;) == &quot;Existing&quot;)}</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
           </IfController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Find position candidates&quot;">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Find position candidates&quot;" enabled="true">
               <intProp name="HTTPSampler.concurrentPool">6</intProp>
               <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/claim</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -704,7 +706,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
                 </collectionProp>
@@ -716,7 +718,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </ResponseAssertion>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Find position candidates&quot;">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Find position candidates&quot;" enabled="true">
               <intProp name="HTTPSampler.concurrentPool">6</intProp>
               <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -740,7 +742,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
                 <collectionProp name="HeaderManager.headers">
                   <elementProp name="" elementType="Header">
                     <stringProp name="Header.name">accept</stringProp>
@@ -753,7 +755,7 @@ vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
                 </collectionProp>
               </HeaderManager>
               <hashTree/>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
                 </collectionProp>
