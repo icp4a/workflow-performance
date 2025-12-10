@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Hiring Sample Testplan">
+      <stringProp name="TestPlan.comments">This testplan executes the hiring sample scenario as a multi-user performance load test</stringProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Benutzer definierte Variablen">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread group">
+        <stringProp name="ThreadGroup.num_threads">${numThreads}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__groovy(Integer.valueOf((Integer.valueOf(${numThreads}) * BigDecimal.valueOf(${rampUpMultiplier})).intValue()) ,)}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">startnextloop</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Schleifen-Controller (Loop Controller)">
+          <stringProp name="LoopController.loops">${rounds}</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User defined variables &lt;-- EDIT THIS ONLY">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="userPasswordCSVFile" elementType="Argument">
+              <stringProp name="Argument.name">userPasswordCSVFile</stringProp>
+              <stringProp name="Argument.value">C:\hiring_jmeter\csv\UserPassword.csv</stringProp>
+              <stringProp name="Argument.desc">Full path to CSV file that contains a list of comma separated user,password combinations</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="outputDir" elementType="Argument">
+              <stringProp name="Argument.name">outputDir</stringProp>
+              <stringProp name="Argument.value">C:\hiring_jmeter\output</stringProp>
+              <stringProp name="Argument.desc">Directory to store logs and results</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="targetServer" elementType="Argument">
+              <stringProp name="Argument.name">targetServer</stringProp>
+              <stringProp name="Argument.value">cpd-icp4badeploy.apps.ocp4-cl-i36.performance.de.ibm.com</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">CPD route URL</stringProp>
+            </elementProp>
+            <elementProp name="targetPort" elementType="Argument">
+              <stringProp name="Argument.name">targetPort</stringProp>
+              <stringProp name="Argument.value">443</stringProp>
+              <stringProp name="Argument.desc">CPD route port</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="targetProtocol" elementType="Argument">
+              <stringProp name="Argument.name">targetProtocol</stringProp>
+              <stringProp name="Argument.value">https</stringProp>
+              <stringProp name="Argument.desc">CPD route protocol</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="bawInstance" elementType="Argument">
+              <stringProp name="Argument.name">bawInstance</stringProp>
+              <stringProp name="Argument.value">baw-instance1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">BAW instance name</stringProp>
+            </elementProp>
+            <elementProp name="paAcronym" elementType="Argument">
+              <stringProp name="Argument.name">paAcronym</stringProp>
+              <stringProp name="Argument.value">HSS</stringProp>
+              <stringProp name="Argument.desc">Acronym of the process application that contains the benchmark process</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="processName" elementType="Argument">
+              <stringProp name="Argument.name">processName</stringProp>
+              <stringProp name="Argument.value">Standard HR Open New Position</stringProp>
+              <stringProp name="Argument.desc">Name of the benchmark process model</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="rounds" elementType="Argument">
+              <stringProp name="Argument.name">rounds</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Number of test iterations (new Logon per iteration)</stringProp>
+            </elementProp>
+            <elementProp name="numThreads" elementType="Argument">
+              <stringProp name="Argument.name">numThreads</stringProp>
+              <stringProp name="Argument.value">100</stringProp>
+              <stringProp name="Argument.desc">Number of parallel threads</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="scenarioLoopCount" elementType="Argument">
+              <stringProp name="Argument.name">scenarioLoopCount</stringProp>
+              <stringProp name="Argument.value">1000</stringProp>
+              <stringProp name="Argument.desc">Number of times a thread executes the scenario per round</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="thinkTime" elementType="Argument">
+              <stringProp name="Argument.name">thinkTime</stringProp>
+              <stringProp name="Argument.value">5</stringProp>
+              <stringProp name="Argument.desc">Seconds to wait before each user interaction, e.g. ${__Random(500,2000)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="rampUpMultiplier" elementType="Argument">
+              <stringProp name="Argument.name">rampUpMultiplier</stringProp>
+              <stringProp name="Argument.value">0.5</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Multiplied with numThreads gives us the ramp up period in seconds</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="Target Server">
+          <stringProp name="HTTPSampler.domain">${targetServer}</stringProp>
+          <stringProp name="HTTPSampler.port">${targetPort}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${targetProtocol}</stringProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="User / Password CSV data">
+          <stringProp name="TestPlan.comments">CSV File containing a list of username,password combinations</stringProp>
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">${userPasswordCSVFile}</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">targetUser,targetPassword</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get IAM token">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">/idprovider/v1/auth/identitytoken</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">grant_type=password&amp;username=${targetUser}&amp;password=${targetPassword}&amp;scope=openid</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract IAM Token" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">iamToken</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;access_token&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">NOT FOUND</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Exchange the IAM token for a Platform UI token">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">/v1/preauth/validateAuth</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">username</stringProp>
+                <stringProp name="Header.value">${targetUser}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">iam-token</stringProp>
+                <stringProp name="Header.value">${iamToken}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Bearer" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">accessToken</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">accessToken</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">NOTFOUND</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get BPM CSRF Token">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/system/login</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;refresh_groups&quot;: true, &quot;requested_lifetime&quot;: 7200}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract CSRF Token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">bpmCSRFToken</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">csrf_token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">NOTFOUND</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Scenario loop (per thread)">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">${scenarioLoopCount}</stringProp>
+        </LoopController>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Prepare test data">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import groovy.json.JsonOutput
+
+// Define possible values
+def positionTypes = [&quot;New&quot;, &quot;Existing&quot;]
+def locations = [&quot;Atlanta&quot;, &quot;Boston&quot;, &quot;Chicago&quot;, &quot;Cincinati&quot;, &quot;Dallas&quot;, &quot;Denver&quot;, &quot;Des Moines&quot;]
+def departments = [&quot;Finance&quot;, &quot;Marketing&quot;, &quot;Product Development&quot;, &quot;Human Resources&quot;, &quot;Sales&quot;, &quot;Customer Service&quot;, &quot;Business Partner Service&quot;, &quot;Business Strategies&quot;, &quot;Software Engineering&quot;]
+def employmentTypes = [&quot;Full-time&quot;, &quot;Part-time&quot;, &quot;Contract&quot;]
+def payTypes = [&quot;Exempt&quot;, &quot;Non-Exempt&quot;]
+def experienceLevels = [&quot;No prior experience&quot;, &quot;1-2 years experience&quot;, &quot;3-4 years experience&quot;, &quot;5-10 years experience&quot;, &quot;10+ years experience&quot;]
+def skills = [&quot;Programming&quot;, &quot;Design Patterns&quot;, &quot;Data Structures&quot;, &quot;Algorithms&quot;, &quot;Version Control&quot;, &quot;Quality Assurance&quot;, &quot;Graphic Design&quot;, &quot;Analysis&quot;, &quot;Project Management&quot;, &quot;Customer Service&quot;]
+def educations = [&quot;Bachelor of Science (BS)&quot;, &quot;Bachelor of Arts (BA)&quot;, &quot;Bachelor of Engineering (B.Eng)&quot;, &quot;Bachelor of Architecture (B.Arch)&quot;, &quot;Master of Business Administration (MBA)&quot;, &quot;Master of Science in Mathematics (MMath)&quot;, &quot;Master of Science in Information Technology (MSc.IT)&quot;]
+def approvals = [&quot;Approved&quot;, &quot;Rejected&quot;]
+def jobTitles = [&quot;Administrative Assistant&quot;,&quot;Administrative Coordinator&quot;,&quot;Administrative Director&quot;,&quot;Administrative Services Manager&quot;,&quot;Administrative Services Officer&quot;,&quot;Administrative Specialist&quot;,&quot;Administrative Support Manager&quot;,&quot;Administrative Support Supervisor&quot;,&quot;Administrator&quot;,&quot;Assistant Director&quot;,&quot;Billing Clerk&quot;,&quot;Client Relations Manager&quot;,&quot;Contract Administrator&quot;,&quot;Credit Clerk&quot;,&quot;Data Entry&quot;,&quot;Executive Assistant&quot;,&quot;Executive Services Administrator&quot;,&quot;Facility Manager&quot;,&quot;General Office Clerk&quot;,&quot;Human Resources Administrator&quot;,&quot;Information Clerk&quot;,&quot;Legal Secretary&quot;,&quot;Mail Clerk&quot;,&quot;Mail Clerk Leader&quot;,&quot;Mail Equipment Operator&quot;,&quot;Medical Secretary&quot;,&quot;Office Assistant&quot;,&quot;Office Clerk&quot;,&quot;Office Manager&quot;,&quot;Office Support Manager&quot;,&quot;Office Support Supervisor&quot;,&quot;Program Manager&quot;,&quot;Receptionist&quot;,&quot;Records Management Analyst&quot;,&quot;Secretary&quot;,&quot;Senior Administrative Analyst&quot;,&quot;Senior Administrative Coordinator&quot;,&quot;Senior Administrative Services Officer&quot;,&quot;Senior Coordinator&quot;,&quot;Senior Executive Assistant&quot;,&quot;Senior Special Events Coordinator&quot;,&quot;Senior Support Assistant&quot;,&quot;Senior Support Specialist&quot;,&quot;Special Events Coordinator&quot;,&quot;Special Programs Coordinator&quot;,&quot;Staff Assistant&quot;,&quot;Support Assistant&quot;,&quot;Support Specialist&quot;,&quot;Typist&quot;,&quot;Virtual Assistant&quot;,&quot;Virtual Receptionist&quot;,&quot;Word Processor&quot;,&quot;Advanced Business Intelligence Analyst/Project Manager&quot;,&quot;Application Technical Specialist&quot;,&quot;Associate Director Social Business Intelligence and Big Data&quot;,&quot;Business Intelligence Analyst&quot;,&quot;Business Intelligence and Foundation Services Leader&quot;,&quot;Business Intelligence and Reporting Analyst&quot;,&quot;Business intelligence Business Analyst&quot;,&quot;Business Intelligence Developer&quot;,&quot;Business Intelligence Director&quot;,&quot;Business Intelligence Engineer&quot;,&quot;Business Intelligence Solutions Developer&quot;,&quot;Business Objects Architect&quot;,&quot;Cognos Business Development Architect&quot;,&quot;Cognos Business Intelligence Developer&quot;,&quot;Consumer Insight Manager&quot;,&quot;Cyber Intelligence Watch Officer&quot;,&quot;Data Analyst - Business Intelligence&quot;,&quot;Data Architect&quot;,&quot;Data Warehouse and Business Intelligence Developer&quot;,&quot;Director of Business Intelligence and Data Warehouse&quot;,&quot;Enterprise Account Executive - Predictive Intelligence&quot;,&quot;Enterprise Intelligence Reporting Architect&quot;,&quot;Ethics Office Business Intelligence Officer&quot;,&quot;Federal - Business Intelligence Lead&quot;,&quot;Healthcare Business Intelligence Manager&quot;,&quot;Informatica Extract Transform Load (ETL) Developer&quot;,&quot;Information Delivery, Data Analyst&quot;,&quot;Information Technology Business Intelligence Platform Product Manager&quot;,&quot;Institutional Research Business Intelligence Systems Analyst&quot;,&quot;Integration/Business Intelligence Technical Lead&quot;,&quot;Java Developer - Big Data/Business Intelligence&quot;,&quot;Lead Analytics Engineer&quot;,&quot;Lead Business Intelligence Developer&quot;,&quot;Manager, Business Intelligence&quot;,&quot;Manager, Business Metrics/Analytics&quot;,&quot;Microstrategy Dashboard Developer and Architect&quot;,&quot;Oracle Technical Lead&quot;,&quot;PeopleSoft Business Analyst&quot;,&quot;Project Manager&quot;,&quot;Project Support, Business Intelligence and Fraud Agents&quot;,&quot;Report and Visualization Developer, Business Intelligence&quot;,&quot;SAP Business Intelligence Consultant&quot;,&quot;Senior Analyst, Retail Analytics and Reporting&quot;,&quot;Senior Competitive Intelligence Manager&quot;,&quot;Senior Developer with Pentaho Business Intelligence Suite&quot;,&quot;Senior Engineer Information Technology - Business intelligence Reporting&quot;,&quot;Senior Manager, Product Intelligence and Cost Analytics&quot;,&quot;Senior Market Intelligence Analyst&quot;,&quot;Senior Technical Consultant - Business Intelligence&quot;,&quot;Service Market Intelligence Manager&quot;,&quot;Social Media and Analytics Associate&quot;,&quot;Software Engineer - Data Warehouse/Business Intelligence&quot;,&quot;Solution Architect, Business Intelligence&quot;,&quot;Solutions Designer, Business Intelligence&quot;,&quot;SQL Business Intelligence and data Warehouse Manager&quot;,&quot;Strategic Business Manager&quot;,&quot;Subject Matter Expert - Business Intelligence Tools&quot;,&quot;Supply Chain Business Intelligence - Senior Consultant&quot;,&quot;Tableau Data Analytics Platform Lead&quot;]
+def firstNames = [&quot;Violette&quot;, &quot;Lacie&quot;, &quot;Janna&quot;, &quot;Robena&quot;, &quot;Amos&quot;, &quot;Anna&quot;, &quot;Frida&quot;, &quot;Mira&quot;, &quot;Shaunda&quot;, &quot;Deandre&quot;, &quot;Leslee&quot;, &quot;Cedric&quot;, &quot;Eddy&quot;, &quot;Tillie&quot;, &quot;Leonel&quot;, &quot;Landon&quot;, &quot;Kala&quot;, &quot;Mirian&quot;, &quot;Barbera&quot;, &quot;Marian&quot;, &quot;Tiffanie&quot;, &quot;Lindy&quot;, &quot;Bernita&quot;, &quot;Waylon&quot;, &quot;Daisy&quot;, &quot;Emil&quot;, &quot;Bryan&quot;, &quot;Claris&quot;, &quot;Dori&quot;, &quot;Lynsey&quot;, &quot;Connie&quot;, &quot;Maryann&quot;, &quot;Brittanie&quot;, &quot;Dudley&quot;, &quot;Stephnie&quot;, &quot;Fredricka&quot;, &quot;Jean&quot;, &quot;Van&quot;, &quot;Noma&quot;, &quot;Kandis&quot;, &quot;Carina&quot;, &quot;Cynthia&quot;, &quot;Johana&quot;, &quot;Carmelo&quot;, &quot;Kenna&quot;, &quot;Jolynn&quot;, &quot;Rodrick&quot;, &quot;Anita&quot;, &quot;Beverly&quot;, &quot;Scarlett&quot;, &quot;Laquanda&quot;, &quot;Celestina&quot;, &quot;Ingeborg&quot;, &quot;Darrin&quot;, &quot;Corrine&quot;, &quot;Fred&quot;, &quot;Yetta&quot;, &quot;Caroyln&quot;, &quot;In&quot;, &quot;Emmie&quot;, &quot;Adelaide&quot;, &quot;Annemarie&quot;, &quot;Jennell&quot;, &quot;Oretha&quot;, &quot;Novella&quot;, &quot;Wally&quot;, &quot;Andrea&quot;, &quot;Alexia&quot;, &quot;Lemuel&quot;, &quot;Heather&quot;, &quot;Maurita&quot;, &quot;Shila&quot;, &quot;Georgetta&quot;, &quot;Kum&quot;, &quot;Nelly&quot;, &quot;Ima&quot;, &quot;Meagan&quot;, &quot;Maryrose&quot;, &quot;Adeline&quot;, &quot;Fiona&quot;, &quot;Jamila&quot;, &quot;Penelope&quot;, &quot;Denver&quot;, &quot;Rhea&quot;, &quot;Beatris&quot;, &quot;Lesa&quot;, &quot;Xochitl&quot;, &quot;Virgil&quot;, &quot;Gemma&quot;, &quot;Shad&quot;, &quot;Reynalda&quot;, &quot;Jaleesa&quot;, &quot;Parthenia&quot;, &quot;Lida&quot;, &quot;Valery&quot;, &quot;Maximo&quot;, &quot;Joleen&quot;, &quot;Elsa&quot;, &quot;Teressa&quot;, &quot;Merry&quot;]
+def lastNames = [&quot;Pellett&quot;, &quot;Greensfelder&quot;, &quot;Wyman&quot;, &quot;Brasington&quot;, &quot;Inscore&quot;, &quot;Burkes&quot;, &quot;Mckey&quot;, &quot;Playford&quot;, &quot;Pawlowski&quot;, &quot;Schinke&quot;, &quot;Oachs&quot;, &quot;Gubser&quot;, &quot;Kearny&quot;, &quot;Haataja&quot;, &quot;Brwon&quot;, &quot;Carley&quot;, &quot;Rayl&quot;, &quot;Gothe&quot;, &quot;Romaine&quot;, &quot;Lichorat&quot;, &quot;Murzyn&quot;, &quot;Siwicki&quot;, &quot;Kaniecki&quot;, &quot;Koiner&quot;, &quot;Farnum&quot;, &quot;Glatzel&quot;, &quot;Blomgren&quot;, &quot;Zezima&quot;, &quot;Wilund&quot;, &quot;Vanostberg&quot;, &quot;Velastegui&quot;, &quot;Caper&quot;, &quot;Baquet&quot;, &quot;Grosshans&quot;, &quot;Leasher&quot;, &quot;Laughridge&quot;, &quot;Disotell&quot;, &quot;Dunlavy&quot;, &quot;Brest&quot;, &quot;Sideris&quot;, &quot;Schanck&quot;, &quot;Stackpole&quot;, &quot;Pereiro&quot;, &quot;Drowne&quot;, &quot;Durrell&quot;, &quot;Smolenski&quot;, &quot;Heino&quot;, &quot;Nery&quot;, &quot;Yuan&quot;, &quot;Pfeil&quot;, &quot;Fabiano&quot;, &quot;Meter&quot;, &quot;Stoffel&quot;, &quot;Trimnell&quot;, &quot;Poolheco&quot;, &quot;Waskiewicz&quot;, &quot;Lundy&quot;, &quot;Ganigan&quot;, &quot;Harvard&quot;, &quot;Torgeson&quot;, &quot;Banvelos&quot;, &quot;Hingston&quot;, &quot;Drahos&quot;, &quot;Wonnacott&quot;, &quot;Barcelona&quot;, &quot;Sulser&quot;, &quot;Michelli&quot;, &quot;Hufton&quot;, &quot;Philbrook&quot;, &quot;Petzel&quot;, &quot;Glimpse&quot;, &quot;Laso&quot;, &quot;Wiater&quot;, &quot;Oplinger&quot;, &quot;Levien&quot;, &quot;Coggin&quot;, &quot;Morphis&quot;, &quot;Birts&quot;, &quot;Moncrieff&quot;, &quot;Dejulio&quot;, &quot;Campoli&quot;, &quot;Gravert&quot;, &quot;Caminos&quot;, &quot;Brits&quot;, &quot;Dumpert&quot;, &quot;Demartini&quot;, &quot;Buckbee&quot;, &quot;Stouch&quot;, &quot;Andrle&quot;, &quot;Grambo&quot;, &quot;Borrayo&quot;, &quot;Deuschel&quot;, &quot;Lairy&quot;, &quot;Wala&quot;, &quot;Kaid&quot;, &quot;Furlow&quot;, &quot;Dillinger&quot;, &quot;Hassenger&quot;, &quot;Doelger&quot;, &quot;Pradier&quot;]
+
+// Set random values
+def random = new Random()
+vars.put(&quot;approval&quot;, approvals[random.nextInt(approvals.size())])
+vars.put(&quot;candidateFirstName&quot;, firstNames[random.nextInt(firstNames.size())])
+vars.put(&quot;candidateLastName&quot;, lastNames[random.nextInt(lastNames.size())])
+vars.put(&quot;candidateSupervisorLastName&quot;, lastNames[random.nextInt(lastNames.size())])
+vars.put(&quot;department&quot;, departments[random.nextInt(departments.size())])
+vars.put(&quot;employmentType&quot;, employmentTypes[random.nextInt(employmentTypes.size())])
+vars.put(&quot;experienceLevel&quot;, experienceLevels[random.nextInt(payTypes.size())])
+vars.put(&quot;gmApproval&quot;, random.nextBoolean().toString())
+vars.put(&quot;hiringManager&quot;, firstNames[random.nextInt(firstNames.size())] + &quot; &quot; + lastNames[random.nextInt(lastNames.size())])
+vars.put(&quot;jobTitle&quot;, jobTitles[random.nextInt(jobTitles.size())])
+vars.put(&quot;location&quot;, locations[random.nextInt(locations.size())])
+vars.put(&quot;payLevel&quot;, (1 + random.nextInt(10)).toString())
+vars.put(&quot;payType&quot;, payTypes[random.nextInt(payTypes.size())])
+vars.put(&quot;personFirstName&quot;, firstNames[random.nextInt(firstNames.size())])
+vars.put(&quot;personLastName&quot;, lastNames[random.nextInt(lastNames.size())])
+vars.put(&quot;personSupervisorLastName&quot;, lastNames[random.nextInt(lastNames.size())])
+vars.put(&quot;positionType&quot;, positionTypes[random.nextInt(positionTypes.size())])
+
+// Pick random list of educations (at least 1)
+def count = 1 + random.nextInt(educations.size())
+def pickedLevels = educations.toList()
+pickedLevels.shuffle(random)
+pickedLevels = pickedLevels.take(count)
+vars.put(&quot;educations&quot;, pickedLevels.join(&quot;,&quot;))
+
+// Pick random list of skills (at least 1)
+count = 1 + random.nextInt(skills.size())
+pickedLevels = skills.toList()
+pickedLevels.shuffle(random)
+pickedLevels = pickedLevels.take(count)
+vars.put(&quot;skills&quot;, pickedLevels.join(&quot;,&quot;))
+
+def candidates = [
+    [name:&quot;Bob Smith&quot;, qualifications:[education:[&quot;Bachelor of Arts (BA)&quot;], skills:[&quot;Customer Service&quot;], experience:&quot;3-4 years experience&quot;]],
+    [name:&quot;Monica Tribiani&quot;, qualifications:[education:[&quot;Bachelor of Arts (BA)&quot;, &quot;Master of Business Administration (MBA)&quot;], skills:[&quot;Project Management&quot;, &quot;Customer Service&quot;], experience:&quot;10+ years experience&quot;]],
+    [name:&quot;Emma Doe&quot;, qualifications:[education:[&quot;Bachelor of Engineering (B.Eng)&quot;, &quot;Master of Science in Information Technology (MSc.IT)&quot;], skills:[&quot;Quality Assurance&quot;, &quot;Programming&quot;], experience:&quot;1-2 years experience&quot;]],
+    [name:&quot;Chandler Green&quot;, qualifications:[education:[&quot;Bachelor of Science (BS)&quot;, &quot;Master of Science in Mathematics (MMath)&quot;], skills:[&quot;Analysis&quot;], experience:&quot;5-10 years experience&quot;]],
+    [name:&quot;Moe Bryant&quot;, qualifications:[education:[&quot;Bachelor of Architecture (B.Arch)&quot;, &quot;Master of Business Administration (MBA)&quot;], skills:[&quot;Programming&quot;], experience:&quot;No prior experience&quot;]],
+    [name:&quot;Joey Phalange&quot;, qualifications:[education:[&quot;Bachelor of Arts (BA)&quot;], skills:[&quot;Customer Service&quot;], experience:&quot;3-4 years experience&quot;]],
+    [name:&quot;Courtney Adams&quot;, qualifications:[education:[&quot;Bachelor of Arts (BA)&quot;, &quot;Master of Business Administration (MBA)&quot;], skills:[&quot;Quality Assurance&quot;], experience:&quot;3-4 years experience&quot;]],
+    [name:&quot;Jim Torvalds&quot;, qualifications:[education:[&quot;Bachelor of Engineering (B.Eng)&quot;, &quot;Master of Science in Mathematics (MMath)&quot;], skills:[&quot;Programming&quot;,&quot;Data Structures&quot;,&quot;Algorithms&quot;,&quot;Analysis&quot;], experience:&quot;5-10 years experience&quot;]],
+    [name:&quot;Billy Mars&quot;, qualifications:[education:[&quot;Bachelor of Architecture (B.Arch)&quot;], skills:[&quot;Programming&quot;], experience:&quot;1-2 years experience&quot;]],
+    [name:&quot;Regina Bing&quot;, qualifications:[education:[&quot;Bachelor of Science (BS)&quot;, &quot;Master of Science in Mathematics (MMath)&quot;], skills:[&quot;Analysis&quot;,&quot;Programming&quot;,&quot;Algorithms&quot;], experience:&quot;10+ years experience&quot;]]
+]
+vars.put(&quot;candidates&quot;, JsonOutput.toJson(candidates))</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="Think time">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">if (ctx.getCurrentSampler().getName() == &quot;Prepare test data&quot;) {
+    return 0   
+} else {
+    return ${thinkTime} * 1000
+}
+</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223Timer>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Basic headers">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">BPMCSRFToken</stringProp>
+                <stringProp name="Header.value">${bpmCSRFToken}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Start new hiring Process">
+            <stringProp name="TestPlan.comments">This request is used for the creation of new process instances</stringProp>
+            <intProp name="HTTPSampler.concurrentPool">6</intProp>
+            <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/processes</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="model" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">${processName}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">model</stringProp>
+                </elementProp>
+                <elementProp name="container" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">${paAcronym}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">container</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49587">201</stringProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Checks wether or not the process was started successfully</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">1</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract process instance id">
+              <stringProp name="JSONPostProcessor.referenceNames">processInstanceId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="TestPlan.comments">Extract process instance id from REST response</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get claimed Task &quot;Submit position request&quot;">
+            <stringProp name="TestPlan.comments">Gets the only claimed Task for this process instance</stringProp>
+            <intProp name="HTTPSampler.concurrentPool">6</intProp>
+            <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="process_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">${processInstanceId}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">process_id</stringProp>
+                </elementProp>
+                <elementProp name="states" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.value">claimed</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">states</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Checks wether or not the task was successfully retrieved</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">1</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of claimed Task">
+              <stringProp name="JSONPostProcessor.referenceNames">currentTaskId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.user_task_instances[0].id </stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+              <stringProp name="TestPlan.comments">Extract id of only claimed Task from REST response</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Submit position request&quot;">
+            <intProp name="HTTPSampler.concurrentPool">6</intProp>
+            <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
+            <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;output&quot;: [&#xd;
+		{&#xd;
+			&quot;name&quot;: &quot;requisition&quot;,&#xd;
+			&quot;data&quot;: {&#xd;
+				&quot;reqNum&quot;: &quot;1141&quot;,&#xd;
+				&quot;requester&quot;: &quot;${hiringManager}&quot;,&#xd;
+				&quot;empType&quot;: &quot;${employmentType}&quot;,&#xd;
+				&quot;approvalNeeded&quot;: false,&#xd;
+				&quot;date&quot;: &quot;2025-12-11T11:45:41.000&quot;,&#xd;
+				&quot;department&quot;: &quot;${department}&quot;,&#xd;
+				&quot;location&quot;: &quot;${location}&quot;,&#xd;
+				&quot;empNum&quot;: 1,&#xd;
+				&quot;gmApproval&quot;: &quot;${gmApproval}&quot;,&#xd;
+				&quot;gmComments&quot;: &quot;no comment&quot;,&#xd;
+				&quot;instanceId&quot;: &quot;&quot;&#xd;
+			}&#xd;
+		},&#xd;
+		{&#xd;
+			&quot;name&quot;: &quot;currentPosition&quot;,&#xd;
+			&quot;data&quot;: {&#xd;
+				&quot;positionType&quot;: &quot;${positionType}&quot;,&#xd;
+				&quot;replacement&quot;: {&#xd;
+					&quot;lastName&quot;: &quot;${personLastName}&quot;,&#xd;
+					&quot;firstName&quot;: &quot;${personFirstName}&quot;,&#xd;
+					&quot;supervisor&quot;: &quot;${personSupervisorLastName}&quot;,&#xd;
+					&quot;startDate&quot;: &quot;2020-04-30T11:05:41.000&quot;,&#xd;
+					&quot;payLevel&quot;: &quot;${payLevel}&quot;,&#xd;
+					&quot;payType&quot;: &quot;${payType}&quot;,&#xd;
+					&quot;notes&quot;: &quot;no notes necessary&quot;&#xd;
+				},&#xd;
+				&quot;jobTitle&quot;: &quot;${jobTitle}&quot;,&#xd;
+				&quot;iId&quot;: &quot;&quot;,&#xd;
+				&quot;qualifications&quot;: {&#xd;
+					&quot;education&quot;: [&quot;${educations}&quot;],&#xd;
+					&quot;skills&quot;: [&quot;${skills}&quot;],&#xd;
+					&quot;experience&quot;: &quot;${experienceLevel}&quot;&#xd;
+				}&#xd;
+			}&#xd;
+		}&#xd;
+	]&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Checks wether or not the task was completed successfully</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">1</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks">
+            <stringProp name="TestPlan.comments">Gets all claimable Tasks of this process (should only be one)</stringProp>
+            <intProp name="HTTPSampler.concurrentPool">6</intProp>
+            <stringProp name="HTTPSampler.path">/${bawInstance}/rest/bpm/wle/v1/process/${processInstanceId}/taskSummary/active</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Checks wether or not the task list was successfully retrieved</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">1</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of ready Task">
+              <stringProp name="JSONPostProcessor.referenceNames">currentTaskId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.tasks[0].tkiid</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+              <stringProp name="TestPlan.comments">Extract only claimable task id from REST response</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If new position">
+            <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;positionType&quot;) == &quot;New&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Review new position request&quot;">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/claim</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="TestPlan.comments">Checks wether or not the claim succeeded</stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">1</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Review new position request&quot;">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+	&quot;output&quot;: [&#xd;
+		{&#xd;
+			&quot;name&quot;: &quot;requisition&quot;,&#xd;
+			&quot;data&quot;: {&#xd;
+				&quot;reqNum&quot;: &quot;1141&quot;,&#xd;
+				&quot;requester&quot;: &quot;${hiringManager}&quot;,&#xd;
+				&quot;empType&quot;: &quot;${employmentType}&quot;,&#xd;
+				&quot;approvalNeeded&quot;: false,&#xd;
+				&quot;date&quot;:&quot;2025-12-11T11:47:21.000&quot;,&#xd;
+				&quot;department&quot;: &quot;${department}&quot;,&#xd;
+				&quot;location&quot;: &quot;${location}&quot;,&#xd;
+				&quot;empNum&quot;: 1,&#xd;
+				&quot;gmApproval&quot;: &quot;${gmApproval}&quot;,&#xd;
+				&quot;gmComments&quot;: &quot;No comment&quot;,&#xd;
+				&quot;instanceId&quot;: &quot;&quot;&#xd;
+			}&#xd;
+		}&#xd;
+	]&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">accept</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="TestPlan.comments">Checks wether or not the task was completed successfully</stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">1</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved">
+              <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;gmApproval&quot;) == &quot;true&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get ready Tasks">
+                <stringProp name="TestPlan.comments">Gets all claimable Tasks of this process (should only be one)</stringProp>
+                <intProp name="HTTPSampler.concurrentPool">6</intProp>
+                <stringProp name="HTTPSampler.path">/${bawInstance}/rest/bpm/wle/v1/process/${processInstanceId}/taskSummary/active</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                  <collectionProp name="Arguments.arguments"/>
+                </elementProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                  <collectionProp name="Asserion.test_strings">
+                    <stringProp name="49586">200</stringProp>
+                  </collectionProp>
+                  <stringProp name="TestPlan.comments">Checks wether or not the task list was successfully retrieved</stringProp>
+                  <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                  <boolProp name="Assertion.assume_success">false</boolProp>
+                  <intProp name="Assertion.test_type">1</intProp>
+                  <stringProp name="Assertion.custom_message"></stringProp>
+                </ResponseAssertion>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract id of ready Task" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">currentTaskId</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.tasks[0].tkiid</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+                  <stringProp name="TestPlan.comments">Extract only claimable task id from REST response</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If approved or no approval needed">
+            <stringProp name="IfController.condition">${__jexl3(vars.get(&quot;gmApproval&quot;) == &quot;true&quot; || vars.get(&quot;positionType&quot;) == &quot;Existing&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Claim Task &quot;Find position candidates&quot;">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/claim</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="TestPlan.comments">Checks wether or not the claim succeeded</stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">1</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Complete Task &quot;Find position candidates&quot;">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.path">/${bawInstance}/bpm/user-tasks/${currentTaskId}/complete</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+	&quot;output&quot;: [&#xd;
+		{&#xd;
+			&quot;name&quot;: &quot;candidates&quot;,&#xd;
+			&quot;data&quot;: ${candidates}&#xd;
+		}&#xd;
+	]&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">accept</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert successful">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="TestPlan.comments">Checks wether or not the task was completed successfully</stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">1</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Results Tree">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename">${outputDir}\run_${__time(YMDHMS)}.out</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
